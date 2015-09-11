@@ -1,11 +1,12 @@
 var gl = document.getElementById("canvas").getContext("experimental-webgl");
 
 var program = function (program) {
-    [ "2d-vertex-shader", "2d-fragment-shader" ].map((id, i) => {
-        var shader = gl.createShader(i == 0 ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER)
-        gl.shaderSource(shader, document.getElementById(id).text);
-        gl.compileShader(shader);
-        gl.attachShader(program, shader);
+    [ "2d-vertex-shader", "2d-fragment-shader" ].forEach((id) => {
+        gl.attachShader(program, function(shader) {
+            gl.shaderSource(shader, document.getElementById(id).text);
+            gl.compileShader(shader);
+            return shader;
+        } (gl.createShader(id.indexOf("vertex") > 0 ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER)));
     })
     gl.linkProgram(program);
     gl.useProgram(program);
