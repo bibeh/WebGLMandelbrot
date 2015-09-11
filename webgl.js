@@ -1,17 +1,18 @@
 var gl = document.getElementById("canvas").getContext("experimental-webgl");
 
-function createShader(id, type) {
-    var shader = gl.createShader(type);
-    gl.shaderSource(shader, document.getElementById(id).text);
-    gl.compileShader(shader);
-    return shader;
-}
-
-var program = gl.createProgram();
-gl.attachShader(program, createShader("2d-vertex-shader", gl.VERTEX_SHADER));
-gl.attachShader(program, createShader("2d-fragment-shader", gl.FRAGMENT_SHADER));
-gl.linkProgram(program);
-gl.useProgram(program);
+var program = function (program) {
+    function createShader(id, type) {
+        var shader = gl.createShader(type);
+        gl.shaderSource(shader, document.getElementById(id).text);
+        gl.compileShader(shader);
+        return shader;
+    }
+    gl.attachShader(program, createShader("2d-vertex-shader", gl.VERTEX_SHADER));
+    gl.attachShader(program, createShader("2d-fragment-shader", gl.FRAGMENT_SHADER));
+    gl.linkProgram(program);
+    gl.useProgram(program);
+    return program;
+} (gl.createProgram());
 
 // Create a buffer and put a single clipspace rectangle in it (2 triangles)
 gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
