@@ -13,8 +13,8 @@ var program = gl.createProgram();
 gl.linkProgram(program);
 gl.useProgram(program);
 
-var positionLocation = gl.getAttribLocation(program, "a_position");
-var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+var a_position = gl.getAttribLocation(program, "a_position");
+var u_resolution = gl.getUniformLocation(program, "u_resolution");
 
 gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
 gl.bufferData(
@@ -28,14 +28,14 @@ gl.bufferData(
          1.0,  1.0]),
     gl.STATIC_DRAW);
 
-gl.enableVertexAttribArray(positionLocation);
-gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+gl.enableVertexAttribArray(a_position);
+gl.vertexAttribPointer(a_position, 2, gl.FLOAT, false, 0, 0);
 
 window.onload = window.onresize = function() {
     var dpr = window.devicePixelRatio || 1;
     canvas.width = canvas.clientWidth * dpr;
     canvas.height = canvas.clientHeight * dpr;
     gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+    gl.uniform2f(u_resolution, canvas.width, canvas.height);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 };
