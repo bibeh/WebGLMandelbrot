@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Testing WebGL</title>
-        <script id="2d-vertex-shader" type="text">
+        <script id="2d-vertex-shader" type="x-shader/x-vertex">
     
             attribute vec2 a_position;
             void main() {
@@ -11,7 +11,7 @@
             }
     
         </script>
-        <script id="2d-fragment-shader" type="text">
+        <script id="2d-fragment-shader" type="x-shader/x-fragment">
     
             void main() {
                gl_FragColor = vec4(gl_FragCoord.xyz / 400.0,1.0);  // green
