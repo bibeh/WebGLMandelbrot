@@ -22,17 +22,13 @@ var a_position = gl.getAttribLocation(program, "a_position");
 var u_resolution = gl.getUniformLocation(program, "u_resolution");
 
 gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([
-        -1.0, -1.0,
-         1.0, -1.0,
-        -1.0,  1.0,
-        -1.0,  1.0,
-         1.0, -1.0,
-         1.0,  1.0]),
-    gl.STATIC_DRAW);
-
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+    -1.0, -1.0,
+     1.0, -1.0,
+    -1.0,  1.0,
+    -1.0,  1.0,
+     1.0, -1.0,
+     1.0,  1.0]), gl.STATIC_DRAW);
 gl.enableVertexAttribArray(a_position);
 gl.vertexAttribPointer(a_position, 2, gl.FLOAT, false, 0, 0);
 

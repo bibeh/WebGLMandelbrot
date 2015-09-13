@@ -21,28 +21,31 @@
         </script>
         <script id="2d-fragment-shader" type="x-shader/x-fragment">
             
-            #ifdef GL_ES
             precision mediump float;
-            #endif
             
             uniform vec2 u_resolution;
 
+            vec3 colormap(float p) {
+                return vec3(1.0 - abs((p - .7) * 2.0),
+                            1.0 - abs((p - .6) * 3.0),
+                            1.0 - abs((p - .4) * 2.0));
+            }
+            
             void main(void) {
                 const float span = 3.0;
                 const vec2 center = vec2(-1.0, 0.0);
                 vec2 z;
-                float p;
                 vec2 C = (gl_FragCoord.xy / u_resolution - vec2(.5, .5)) * span + center;
-                for (float i = 0.0; i <= 1.0; i += .01) {
+                for (float i = 0.0; i < 1.0; i += .02) {
                     float zx2 = z.x * z.x;
                     float zy2 = z.y * z.y;
                     z = vec2(zx2 - zy2 + C.x, 2.0 * z.x * z.y + C.y);
-                    if (zx2 + zy2 > 4.0)
-                        break;
-                    p = i;
+                    if (zx2 + zy2 > 4.0) {
+                        gl_FragColor = vec4(colormap(i), 1.0);
+                        return;
+                    }
                 }
-
-                gl_FragColor = vec4(p, p, p, 1.0);
+                gl_FragColor = vec4(.0, .0, .0, 1.0);
             }
             
         </script>
