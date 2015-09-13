@@ -7,10 +7,15 @@ var program = gl.createProgram();
     var shader = gl.createShader(i.type);
     gl.shaderSource(shader, document.getElementById(i.id).text);
     gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) 
+        throw i.id + ": " + gl.getShaderInfoLog(shader);
     gl.attachShader(program, shader);
 })
 
 gl.linkProgram(program);
+if (!gl.getProgramParameter(program, gl.LINK_STATUS))
+    throw ("program:" + gl.getProgramInfoLog (program));
+
 gl.useProgram(program);
 
 var a_position = gl.getAttribLocation(program, "a_position");
